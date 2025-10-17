@@ -20,3 +20,5 @@ Use additional techniques according to contemporary trends.
 Maybe log some tracking signals into a file or a SQLlite database and write some simple Python script for rudimentary analysis.
 
 Use the files in the folder ./DOCUMENTS ot obtain additional information on what kind of knowledge is to be demonstrated in this project.
+
+Create your own planning documentation to support code generation with generative AI where it seems adequate.

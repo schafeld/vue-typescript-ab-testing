@@ -1,0 +1,26 @@
+{
+  "name": "ab-testing-server",
+  "version": "1.0.0",
+  "description": "Node.js backend for A/B testing e-commerce application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:init": "node src/database/init.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/better-sqlite3": "^7.6.8",
+    "nodemon": "^3.0.2",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.5"
+  }
+}
