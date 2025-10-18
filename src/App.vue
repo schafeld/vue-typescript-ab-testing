@@ -34,6 +34,10 @@ import { LocalStorageAnalyticsProvider } from '@/composables/useAnalytics'
 const isInitialized = ref(false)
 const theme = useTheme()
 
+// First visit modal state
+const showFirstVisitModal = ref(false)
+const FIRST_VISIT_KEY = 'vue-ab-shop-first-visit'
+
 // Set up analytics with local storage for demonstration
 const analytics = useAnalytics({
   provider: new LocalStorageAnalyticsProvider(),
@@ -57,6 +61,26 @@ const { variant: themeVariant } = useABTest('app-theme-test', {
 
 // Development environment check for debugging info
 const isDevelopment = computed(() => import.meta.env.DEV)
+
+/**
+ * Check if this is the first visit and show modal accordingly
+ */
+const checkAndShowFirstVisitModal = () => {
+  const hasVisited = localStorage.getItem(FIRST_VISIT_KEY)
+  if (!hasVisited) {
+    showFirstVisitModal.value = true
+    analytics.track('first_visit_modal_shown')
+  }
+}
+
+/**
+ * Close the first visit modal and mark as visited
+ */
+const closeFirstVisitModal = () => {
+  showFirstVisitModal.value = false
+  localStorage.setItem(FIRST_VISIT_KEY, 'true')
+  analytics.track('first_visit_modal_closed')
+}
 
 /**
  * Initialize the application
@@ -178,6 +202,9 @@ const initializeApp = async () => {
       registrationDate: new Date().toISOString()
     })
 
+    // Check if this is the first visit and show modal if needed
+    checkAndShowFirstVisitModal()
+
     isInitialized.value = true
   } catch (error) {
     console.error('Failed to initialize app:', error)
@@ -231,6 +258,59 @@ onMounted(() => {
       <FooterSection />
     </template>
 
+    <!-- First Visit Notice Modal -->
+    <v-dialog
+      v-model="showFirstVisitModal"
+      max-width="600"
+      persistent
+      class="first-visit-modal"
+    >
+      <v-card>
+        <v-card-title class="d-flex justify-space-between align-center">
+          <span class="text-h5">Welcome to Our Demo Shop!</span>
+          <v-btn
+            icon
+            variant="text"
+            @click="closeFirstVisitModal"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        
+        <v-card-text class="py-6">
+          <div class="text-center">
+            <v-icon size="80" color="info" class="mb-4">
+              mdi-information-outline
+            </v-icon>
+            
+            <h2 class="text-h6 font-weight-bold mb-4">
+              NOTICE: This shop is a technical demo
+            </h2>
+            
+            <p class="text-body-1 mb-4">
+              No real orders are processed. None of your data is stored.
+            </p>
+            
+            <p class="text-body-2 text-medium-emphasis">
+              This is a demonstration of Vue 3, TypeScript, Vuetify 3, and A/B testing technologies.
+              Feel free to explore the features and functionality!
+            </p>
+          </div>
+        </v-card-text>
+        
+        <v-card-actions class="justify-center pb-6">
+          <v-btn
+            color="primary"
+            size="large"
+            @click="closeFirstVisitModal"
+          >
+            <v-icon start>mdi-check</v-icon>
+            Got it, let's explore!
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <!-- Debugging info in development -->
     <v-snackbar
       v-if="themeVariant && isDevelopment"
@@ -246,6 +326,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+/* First visit modal styles */
+:deep(.first-visit-modal .v-overlay__scrim) {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
 
 main.v-main {
   width: max-content;

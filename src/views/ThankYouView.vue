@@ -39,6 +39,8 @@ onMounted(() => {
       
       <h1 class="text-h3 font-weight-bold mb-4">Thank You!</h1>
       <h2 class="text-h5 mb-6">Your order has been confirmed</h2>
+
+      <h2 class="text-h5 mb-6">NOTICE: This shop is just a technical demo. No real orders are processed. None of your data is stored.</h2>
       
       <v-card class="mx-auto mb-8" max-width="400" elevation="2">
         <v-card-text>
