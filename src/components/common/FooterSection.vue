@@ -233,7 +233,10 @@ const handleFooterLinkClick = async (section: string, label: string) => {
             <v-icon icon="mdi-shopping" class="mr-2" color="primary" />
             <span class="font-weight-bold mr-4">AB Shop</span>
             <span class="text-grey-lighten-1 text-body-2">
-              © 2025 AB Shop. All rights reserved.
+              © 2025 AB Shop. All rights reserved. Made with AI by <a href="https://www.schafeld.com" target="_blank">Oliver Schafeld</a>. 
+              <a href="https://github.com/schafeld/vue-typescript-ab-testing" target="_blank" class="text-grey-lighten-1 text-decoration-none ml-2">
+                <v-icon icon="mdi-github" size="small" />
+              </a>
             </span>
           </div>
         </v-col>
